@@ -29,11 +29,11 @@ import javax.annotation.Nullable;
 
 public class CallLogV2Module extends ReactContextBaseJavaModule {
 
-    private final ReactApplicationContext reactContext;
+    private Context context;
 
     public CallLogV2Module(ReactApplicationContext reactContext) {
         super(reactContext);
-        this.reactContext = reactContext;
+        this.context = reactContext;
     }
 
     @Override
@@ -180,6 +180,7 @@ public class CallLogV2Module extends ReactContextBaseJavaModule {
                 DateFormat df = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
                 //DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String dateTime = df.format(new Date(Long.valueOf(timestampStr)));
+                String type = this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX));
 
                 boolean passesPhoneFilter = phoneNumberSet == null || phoneNumberSet.isEmpty() || phoneNumberSet.contains(phoneNumber);
                 boolean passesMinTimestampFilter = minTimestamp == null || minTimestamp.equals("0") || Long.parseLong(timestampStr) >= Long.parseLong(minTimestamp);
