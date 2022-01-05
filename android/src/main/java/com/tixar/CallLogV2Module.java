@@ -76,9 +76,11 @@ public class CallLogV2Module extends ReactContextBaseJavaModule {
 
             boolean nullFilter = filter == null;
             String minTimestamp = !nullFilter && filter.hasKey("minTimestamp") ? filter.getString("minTimestamp") : "0";
-            String maxTimestamp = !nullFilter && filter.hasKey("maxTimestamp") ? filter.getString("maxTimestamp") : "-1";
-            String phoneNumbers = !nullFilter && filter.hasKey("phoneNumbers") ? filter.getString("phoneNumbers") : "[]";
-            JSONArray phoneNumbersArray= new JSONArray(phoneNumbers);
+            String maxTimestamp = !nullFilter && filter.hasKey("maxTimestamp") ? filter.getString("maxTimestamp")
+                    : "-1";
+            String phoneNumbers = !nullFilter && filter.hasKey("phoneNumbers") ? filter.getString("phoneNumbers")
+                    : "[]";
+            JSONArray phoneNumbersArray = new JSONArray(phoneNumbers);
 
             Set<String> phoneNumberSet = new HashSet<>(Arrays.asList(toStringArray(phoneNumbersArray)));
 
@@ -99,18 +101,22 @@ public class CallLogV2Module extends ReactContextBaseJavaModule {
                 String name = cursor.getString(NAME_COLUMN_INDEX);
 
                 String timestampStr = cursor.getString(DATE_COLUMN_INDEX);
-                minTimestampReached = minTimestampDefined && Long.parseLong(timestampStr) <= Long.parseLong(minTimestamp);
+                minTimestampReached = minTimestampDefined
+                        && Long.parseLong(timestampStr) <= Long.parseLong(minTimestamp);
 
                 DateFormat df = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
-                //DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                // DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String dateTime = df.format(new Date(Long.valueOf(timestampStr)));
 
                 String type = this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX));
 
-                boolean passesPhoneFilter = phoneNumberSet == null || phoneNumberSet.isEmpty() || phoneNumberSet.contains(phoneNumber);
-                boolean passesMinTimestampFilter = minTimestamp == null || minTimestamp.equals("0") || Long.parseLong(timestampStr) >= Long.parseLong(minTimestamp);
-                boolean passesMaxTimestampFilter = maxTimestamp == null || maxTimestamp.equals("-1") || Long.parseLong(timestampStr) <= Long.parseLong(maxTimestamp);
-                boolean passesFilter = passesPhoneFilter&& passesMinTimestampFilter && passesMaxTimestampFilter;
+                boolean passesPhoneFilter = phoneNumberSet == null || phoneNumberSet.isEmpty()
+                        || phoneNumberSet.contains(phoneNumber);
+                boolean passesMinTimestampFilter = minTimestamp == null || minTimestamp.equals("0")
+                        || Long.parseLong(timestampStr) >= Long.parseLong(minTimestamp);
+                boolean passesMaxTimestampFilter = maxTimestamp == null || maxTimestamp.equals("-1")
+                        || Long.parseLong(timestampStr) <= Long.parseLong(maxTimestamp);
+                boolean passesFilter = passesPhoneFilter && passesMinTimestampFilter && passesMaxTimestampFilter;
 
                 if (passesFilter) {
                     WritableMap callLog = Arguments.createMap();
@@ -149,9 +155,11 @@ public class CallLogV2Module extends ReactContextBaseJavaModule {
 
             boolean nullFilter = filter == null;
             String minTimestamp = !nullFilter && filter.hasKey("minTimestamp") ? filter.getString("minTimestamp") : "0";
-            String maxTimestamp = !nullFilter && filter.hasKey("maxTimestamp") ? filter.getString("maxTimestamp") : "-1";
-            String phoneNumbers = !nullFilter && filter.hasKey("phoneNumbers") ? filter.getString("phoneNumbers") : "[]";
-            JSONArray phoneNumbersArray= new JSONArray(phoneNumbers);
+            String maxTimestamp = !nullFilter && filter.hasKey("maxTimestamp") ? filter.getString("maxTimestamp")
+                    : "-1";
+            String phoneNumbers = !nullFilter && filter.hasKey("phoneNumbers") ? filter.getString("phoneNumbers")
+                    : "[]";
+            JSONArray phoneNumbersArray = new JSONArray(phoneNumbers);
 
             Set<String> phoneNumberSet = new HashSet<>(Arrays.asList(toStringArray(phoneNumbersArray)));
 
@@ -167,37 +175,41 @@ public class CallLogV2Module extends ReactContextBaseJavaModule {
             boolean minTimestampReached = false;
 
             while (cursor.moveToNext() && this.shouldContinue(limit, callLogCount) && !minTimestampReached) {
-                if(this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX)) != call_type)
-                    return;
-                    
-                String phoneNumber = cursor.getString(NUMBER_COLUMN_INDEX);
-                int duration = cursor.getInt(DURATION_COLUMN_INDEX);
-                String name = cursor.getString(NAME_COLUMN_INDEX);
+                if (this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX)).equalsIgnoreCase(call_type)) {
+                    String phoneNumber = cursor.getString(NUMBER_COLUMN_INDEX);
+                    int duration = cursor.getInt(DURATION_COLUMN_INDEX);
+                    String name = cursor.getString(NAME_COLUMN_INDEX);
 
-                String timestampStr = cursor.getString(DATE_COLUMN_INDEX);
-                minTimestampReached = minTimestampDefined && Long.parseLong(timestampStr) <= Long.parseLong(minTimestamp);
+                    String timestampStr = cursor.getString(DATE_COLUMN_INDEX);
+                    minTimestampReached = minTimestampDefined
+                            && Long.parseLong(timestampStr) <= Long.parseLong(minTimestamp);
 
-                DateFormat df = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
-                //DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String dateTime = df.format(new Date(Long.valueOf(timestampStr)));
-                String type = this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX));
+                    DateFormat df = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.MEDIUM,
+                            SimpleDateFormat.MEDIUM);
+                    // DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String dateTime = df.format(new Date(Long.valueOf(timestampStr)));
+                    String type = this.resolveCallType(cursor.getInt(TYPE_COLUMN_INDEX));
 
-                boolean passesPhoneFilter = phoneNumberSet == null || phoneNumberSet.isEmpty() || phoneNumberSet.contains(phoneNumber);
-                boolean passesMinTimestampFilter = minTimestamp == null || minTimestamp.equals("0") || Long.parseLong(timestampStr) >= Long.parseLong(minTimestamp);
-                boolean passesMaxTimestampFilter = maxTimestamp == null || maxTimestamp.equals("-1") || Long.parseLong(timestampStr) <= Long.parseLong(maxTimestamp);
-                boolean passesFilter = passesPhoneFilter&& passesMinTimestampFilter && passesMaxTimestampFilter;
+                    boolean passesPhoneFilter = phoneNumberSet == null || phoneNumberSet.isEmpty()
+                            || phoneNumberSet.contains(phoneNumber);
+                    boolean passesMinTimestampFilter = minTimestamp == null || minTimestamp.equals("0")
+                            || Long.parseLong(timestampStr) >= Long.parseLong(minTimestamp);
+                    boolean passesMaxTimestampFilter = maxTimestamp == null || maxTimestamp.equals("-1")
+                            || Long.parseLong(timestampStr) <= Long.parseLong(maxTimestamp);
+                    boolean passesFilter = passesPhoneFilter && passesMinTimestampFilter && passesMaxTimestampFilter;
 
-                if (passesFilter) {
-                    WritableMap callLog = Arguments.createMap();
-                    callLog.putString("phoneNumber", phoneNumber);
-                    callLog.putInt("duration", duration);
-                    callLog.putString("name", name);
-                    callLog.putString("timestamp", timestampStr);
-                    callLog.putString("dateTime", dateTime);
-                    callLog.putString("type", type);
-                    callLog.putInt("rawType", cursor.getInt(TYPE_COLUMN_INDEX));
-                    result.pushMap(callLog);
-                    callLogCount++;
+                    if (passesFilter) {
+                        WritableMap callLog = Arguments.createMap();
+                        callLog.putString("phoneNumber", phoneNumber);
+                        callLog.putInt("duration", duration);
+                        callLog.putString("name", name);
+                        callLog.putString("timestamp", timestampStr);
+                        callLog.putString("dateTime", dateTime);
+                        callLog.putString("type", type);
+                        callLog.putInt("rawType", cursor.getInt(TYPE_COLUMN_INDEX));
+                        result.pushMap(callLog);
+                        callLogCount++;
+                    }
                 }
             }
 
@@ -210,12 +222,12 @@ public class CallLogV2Module extends ReactContextBaseJavaModule {
     }
 
     public static String[] toStringArray(JSONArray array) {
-        if(array==null)
+        if (array == null)
             return null;
 
-        String[] arr=new String[array.length()];
-        for(int i=0; i<arr.length; i++) {
-            arr[i]=array.optString(i);
+        String[] arr = new String[array.length()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = array.optString(i);
         }
         return arr;
     }
