@@ -1,7 +1,7 @@
 {
   "name": "react-native-call-log-v2",
   "title": "React Native Call Log V2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Call log package for react-native (Android only)",
   "main": "index.js",
   "files": [
