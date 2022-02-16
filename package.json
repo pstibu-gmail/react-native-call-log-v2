@@ -1,7 +1,7 @@
 {
   "name": "react-native-call-log-v2",
   "title": "React Native Call Log V2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Call log package for react-native (Android only)",
   "main": "index.js",
   "files": [
@@ -22,12 +22,11 @@
     "react-native"
   ],
   "author": {
-    "name": "Tibu Padmakumar",
-    "email": "pstibu@gmail.com"
+    "username":"pstibu@gmail.com",
+    "name": "Tibu Padmakumar"
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",
-  "readmeFilename": "README.md",
   "peerDependencies": {
     "react": "^16.8.1",
     "react-native": ">=0.60.0-rc.0 <1.0.x"
@@ -35,5 +34,9 @@
   "devDependencies": {
     "react": "^16.9.0",
     "react-native": "^0.61.5"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/pstibu-gmail/react-native-call-log-v2/issues"
+  },
+  "homepage": "https://github.com/pstibu-gmail/react-native-call-log-v2#readme"
 }
